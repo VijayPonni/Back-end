@@ -542,7 +542,7 @@ SELECT DISTINCT column_name FROM table_name;
 
 <br><img src="Assets\pic33.png" width="500px"> <br><br>
 
-# Where clause and AND :
+# WHERE clause and AND :
 
 * `WHERE` clause helps to filter the columns with some conditions .
 
