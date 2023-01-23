@@ -689,6 +689,241 @@ SELECT * FROM table_name WHERE column_name LIKE '% the_text_you_want'
 
     * Aggregate functions provide single resullt from many values.
 
+    * MIN , MAX , AVG and ROUND are the vey basic and commnly used aggregate functions.
+
+<br><img src="Assets\pic46.png" width="500px"> <br><br>
+
+# SUM #
+
+* SUM aggregate function is used to add the column values in a table.
+
+<br><img src="Assets\pic47.png" width="500px"> <br><br>
+
+# Arithemetic Operators :
+
+* We can perform Addition , Substraction , Multiplication , division , Modulus , Factorial on numbers using the Artithematic operators like + , - , * , / , % , ! .
+
+<br><img src="Assets\pic48.png" width="500px"> <br><br>
+
+* Here is an example on Arithematic operators :
+
+<br><img src="Assets\pic49.png" width="500px"> <br><br>
+
+
+# AS keyword :
+
+* AS keyword is used to override the existing column name.
+
+* Sometimes , the SQL will take the Function name as column name . So AS keyword is used to override the default column name.
+
+<br><img src="Assets\pic50.png" width="500px"> <br><br>
+
+# COALESCE :
+
+* COALESCE is a keyword which is used to provide a default value for the null values in a column.
+
+* COALESCE keyword usually takes the next existing value if any value is null in the passes values as follows:
+
+<br><img src="Assets\pic51.png" width="500px"> <br><br>
+
+* For example , If we haven't any email id's in a column , we can mention that empty column with some text like "email is not Provided" using the COALESCE keywors as below:
+
+<br><img src="Assets\pic52.png" width="500px"> <br><br>
+
+# NULLIF
+
+* NULLIF is a keyword which takes two argument.
+
+* It returns null value if two arguments are same .
+
+* It returns the first argument value , if the two arguments are different.
+
+<br><img src="Assets\pic53.png" width="500px"> <br><br>
+
+* This NULLIF keyword is mostly used to avoid divisible by zero errors .
+
+<br><img src="Assets\pic54.png" width="500px"> <br><br>
+
+# Timestamps and Dates:
+
+* Date is a very important to know the exact record creation time , deletion time or updation time in a table.
+
+* We can get the exat current time using the `NOW()` functions and also we can get specific Date and time by mentioning tht DATE and TIME by specifying them with `::` as below example shows:
+
+<br><img src="Assets\pic55.png" width="500px"> <br><br>
+
+## Adding and Substracting Dates.
+
+* We can addand substract dates using the arthemetic operators and the INTERVAL keyword together .
+
+<br><img src="Assets\pic56.png" width="500px"> <br><br>
+
+## Extracting the values from the Timestamp.
+
+* We can get the exact value of year , month or century , Day Of Week (DOW) value from a timetamp in  some situations by using the EXTRACT keyword.
+
+<br><img src="Assets\pic57.png" width="500px"> <br><br>
+
+# AGE function:
+
+* AGE fnction is used to calculate the age.
+
+* It takes two arguments as input , the first argument is Current Date and the second argument is Date_of_birth or year or whatever format of our birth date.
+
+<br><img src="Assets\pic58.png" width="500px"> <br><br>
+
+# Primary Key :
+
+* Primary keys are used to identify the each row with it's own uniquness.
+
+* This primary key constraint is need to be given to a column of a table which contains unique value for all the rows.
+
+* It is helpful when all the column_data are same for more than one row. It differentiates the two rows with the unique primary keys.
+
+## Understanding the Primary Key
+
+* The Primary key can be added as constraints in table creation.
+
+<br><img src="Assets\pic59.png" width="500px"> <br><br>
+
+
+* This can be found in the table's bottom section. We can see this information while describing the table as below:
+
+<br><img src="Assets\pic60.png" width="500px"> <br><br>
+
+
+* This primary key won't allow us to create the duplicate column value. It will throw error like the key already exists.
+
+<br><img src="Assets\pic61.png" width="500px"> <br><br>
+
+## Droping Primary Key constrain :
+
+* We can remove the primary key constarin by altering table as below :
+
+<br><img src="Assets\pic62.png" width="500px"> <br><br>
+
+## Adding Primary Key Constrain :
+
+* To add the Primary Key in a table , we must alter the table with Primary Key constraint keyword as below:
+
+```
+ALTER TABLE table_name ADD PRIMARY KEY (column_names,,,..);
+
+```
+* The PRIMARY KEY keyword's parenthesis may take multiple columns as input in order to define the combined primary_key.
+
+* It won't allow the columns which have duplicate values within it.It will show error if any duplicates found in a column which is tried to use as a Primary_key.
+
+<br><img src="Assets\pic63.png" width="500px"> <br><br>
+
+* The Primary_key column must be unique values.
+
+<br><img src="Assets\pic64.png" width="500px"> <br><br>
+
+# Unique Constraints :
+
+* Unique Constraints are used to have unique values in any columns of a table.
+
+* Unique constraints are not same as Primary Key because primary keys are used to identify a row in a table.
+
+* We can add this unique contraints to any column where we don't want any duplicate column values.
+
+## Adding Unique constraintsm:
+
+* We can add this unique constraints by two methods.
+
+* First method is,
+
+```
+ALTER TABLE table_name ADD UNIQUE( column_name);
+```
+
+* This method will provide the unique contraints using the postgres name as below:
+
+<br><img src="Assets\pic65.png" width="500px"> <br><br>
+
+* According to the above image ,the name for the unique constraint was given by the postgres.
+
+* If we want to use our own name for the unique constraint , we should follow the second method.
+
+* The second method is ,
+
+```
+ALTER TABLE table_name ADD CONSTRAINT unique_constraint_name UNIQUE (column_name OR column_names);
+```
+
+<br><img src="Assets\pic66.png" width="500px"> <br><br>
+
+## Droping Unique constraints :
+
+* We can drop our unique constraints whenever we want by using the below command:
+
+```
+ALTER TABLE table_name DROP CONSTRAINT constraint_name;
+```
+
+* Consider that , we have created the constraint in the name of 'unique_email_id' for email column in a person table. So we can drop the constraint as below:
+
+<br><img src="Assets\pic67.png" width="500px"> <br><br>
+
+## NOTE :
+
+* Unique constraints won't allow to insert the duplicate values into it's column and also we cannot add unique constraints to the column which has the duplicate values.
+
+* We can refer the below images as example :
+
+* As the column has two duplicate emails , we cannot create constraint. it will throw the following error:
+
+<br><img src="Assets\pic68.png" width="500px"> <br><br>
+
+* As we have already created the unique constraint for the column email , we cannot insert duplicate value to the email column. If we try to insert the duplicate value to the email column , it will throw error as below:
+
+<br><img src="Assets\pic69.png" width="500px"> <br><br>
+
+# Check constraints :
+
+* Check constraint is allow us to add a constraint to a column based on a boolean condition.
+
+* These check constraints are used to restrict the column values according to the condtion specified.
+
+## Adding Check Constraint to the table:
+
+* We can add theCheck constraint to the table column by using the below syntax:
+
+```
+ALTER TABLE table_name ADD CONSTRAINT check_constraint_name CHECK (condition on column_values);
+```
+
+<br><img src="Assets\pic70.png" width="500px"> <br><br>
+
+* We cannot add the check constraints to column which is not satisfyinh the condition we defined in the check constraints.
+
+* It will show violation error message as below if we try to do it.
+
+<br><img src="Assets\pic71.png" width="500px"> <br><br>
+
+# DELETE from Table:
+
+* We can delete the whole table records with the below command. But it is risky.
+
+```
+DELETE FROM table_name;
+```
+<br><img src="Assets\pic72.png" width="500px"> <br><br>
+
+### NOTE : If we create the table with new values , the id number will be continue will not start with the 1.
+
+* We can delete the record in a table according to the condition using the WHERE clause as below:
+
+* For example , If we want to delete only one record whose name id is some number , the we can use the below structure:
+
+```
+DELETE FROM table_name WHERE condition;
+```
+<br><img src="Assets\pic73.png" width="500px"> <br><br>
+
+
+
 
 
 
