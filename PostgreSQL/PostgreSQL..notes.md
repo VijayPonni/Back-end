@@ -606,6 +606,115 @@ SELECT * FROM table_name FETCH FIRST no_pf_rows ROW ONLY;
 
 <br><img src="Assets\pic38.png" width="500px"> <br><br>
 
+# IN
+
+* IN is a keyword that is used to group multiple options while filtering the column data with WHERE keyword.
+
+* It is the simplified way of filtering the data in a column according to condition as it reduces the duplication of column name while defining the condition in query .
+
+* It is similar to using OR keyword but it negotiates the reppetion of column names.
+
+```
+SELECT * FROM table_name WHERE coulumn_name IN ( 'value1' , 'value2' , ... );
+
+```
+
+* It is similar to the following structure using OR:
+
+```
+SELECT * FROM table_name WHERE column_name = 'value1' OR coulmn_name = 'value2' ;
+```
+
+<br><img src="Assets\pic39.png" width="500px"> <br><br>
+
+# BETWEEN
+
+* BETWEEN is a keyword which is used to define our start position and end position of data in the condition operation WHERE.
+
+* We can limit our data using this keyword according to our condition.
+
+```
+SELECT * FROM table_name WHERE  column_name BETWEEN start_value AND end_value;
+```
+<br><img src="Assets\pic40.png" width="500px"> <br><br>
+
+# LIKE
+
+* LIKE operator is used to math the text values against the patterns using the wildcards.
+
+* In this case , wildcards are `%` symblo which can be considered as any value.
+
+* For example , if i want to filter the column that contains text , we can specifyusing the LIKE keyword and `%` as below:
+
+```
+SELECT * FROM table_name WHERE column_name LIKE '% the_text_you_want'
+```
+* We can place our `%` wildcard whereever we want inbetween the text. So that we can define filter text we want to avoid.
+
+* For example , if want to get only the email with extension facebook.com , i can write my query as below:
+
+<br><img src="Assets\pic41.png" width="500px"> <br><br>
+
+* We can also use `__` underscores to specify the number of charecters in a text.
+
+<br><img src="Assets\pic42.png" width="500px"> <br><br>
+
+# ILIKE
+
+* ILIKE is the keyword which acts as same as LIKE but it will ignore case sensitivity where LIKE checks the case also.
+
+* For example , if i check any name starts with letter `b` in a column using ILKIE keyword , it will also bring the data which contains capital `B` as initial letter whereas LIKE won't.
+
+<br><img src="Assets\pic43.png" width="500px"> <br><br>
+
+# GROUP BY
+
+* GROUP BY is a keyword which performs on a column with the COUNT(*) operator to identify the number of values availale on each item in the column.
+
+<br><img src="Assets\pic44.png" width="500px"> <br><br>
+
+# HAVING
+
+* HAVING is a keyword which is used with the GROUP BY key keyword which helps to perform the additional operation on the COUNT(*) operation to filter with the condition.
+
+* COUNT(*) is an aggregating function which returns the single vlue from a list or data.
+
+* There are lot of aggregational function available . We can aware of those by visitig the URL given below:
+
+* https://www.postgresql.org/docs/15/functions-aggregate.html
+
+<br><img src="Assets\pic45.png" width="500px"> <br><br>
+
+# Aggregate Functions :
+
+    * Aggregate functions provide single resullt from many values.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
