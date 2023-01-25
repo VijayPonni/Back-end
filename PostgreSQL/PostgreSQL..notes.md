@@ -922,6 +922,354 @@ DELETE FROM table_name WHERE condition;
 ```
 <br><img src="Assets\pic73.png" width="500px"> <br><br>
 
+# Updating the records in a Table :
+
+* We can update any records in a table using the below command:
+
+```
+UPDATE table_name SET column_name = new_value_to_update,column_name2 = new_value ,... WHERE condition_to_specify_the_row
+```
+
+* If we do nt specify the WHERE clause while Updating or deleting the records, it will delete or update the record for every row in a table.
+
+## Updating single column in a row :
+
+<br><img src="Assets\pic74.png" width="500px"> <br><br>
+
+
+## Updaing multiple columns in a row :
+
+<br><img src="Assets\pic75.png" width="500px"> <br><br>
+
+
+# ON CONFLICT DO NOTHING :
+
+* ON CONFLICT DO NOTHING is a special keyword which is used to avoid errors while handling the duplicate vales in a column which is a unique constraint or primary key.
+
+* Usually , we can not add the duplicate values to the columns which are the primary key or unique constraint . Even if we try to do it , it will prompt error message .
+
+* But in somecases , this ON CONFLICT DO NOTHING key word allow us to avoid the error even in the primary key column.
+
+* This keyword can not be used in the ordinary columns which is not have unique constraints or primary keys.
+
+* We can overcome the error while we want to insert any duplicate values in to the table with foloowing syntax:
+
+```
+Insert values....
+ON CONFLICT ( Column_name_which_has_conflict ) DO NOTHING;
+
+```
+* For example If we try to duplicate the id column in a table which is primary_key column , it will show error . But when we use the ON CONFLICT keyword it will not show any duplication error also any insertion will not be take place.
+
+<br><img src="Assets\pic76.png" width="500px"> <br><br>
+
+# ON CONFLICT - Update :
+
+* While Conflict occures , we can also update the latest content into the table record by updating the column value using the below query :
+
+```
+ON CONFLICT ( column_name_which_has_conflict ) DO UPDATE SET coulmn_name_which_we_want_to_update = EXCLUDED.column_name_which_we_want_to_update
+```
+
+* We can also update multiple columns using , like:
+
+```
+ON CONFLICT ( column_name_which_has_conflict ) DO UPDATE SET coulmn_name1_which_we_want_to_update = EXCLUDED.column_name1_which_we_want_to_update , column_name_2 = EXCLUDED.column_name2 , ...
+
+```
+
+<br><img src="Assets\pic77.png" width="500px"> <br><br>
+
+# FOREIGN Keys :
+
+* FOREIGN KEY is the column which is used to relate a table with other table.
+
+* FOREIGN KEY is simply represents the PRIMARY KEY in another table.
+
+* To make this relationship work , the types of the Primary_key of the second table and type of the foreign_key of the first table should be same.
+
+* The Foreign key column of a table should be like the below :
+
+```
+column_name type_of_column REFERENCES second_table_name( second_table's_column_name_to_link ) UNIQUE
+```
+<br><img src="Assets\pic78.png" width="500px"> <br><br>
+
+# Adding Relationships between Tables :
+
+* If we want to relate the two tables , we must add a new column to the first table with the type that is same as the second table's primary key column type.
+
+* Next we should append the key word named `REFERENCES` to the column and link the second table with it's name after the REFERENCE key word.
+
+* Next , We must provide primary_key column name of the second table inside the () .
+
+* We can also add the UNIQUE constraint to the first table foreign key column if we require.
+
+## Example :
+
+* Consider we have two different tables with no relation named :
+
+  * First Table --> Person
+
+  * Second Table --> Car
+
+<br><img src="Assets\pic79.png" width="500px"> <br><br>
+
+* To relate the two tables , we must create foreign key.
+
+* Foreign key in the sense , we must add a new column in first table and relate it to the second column.
+
+<br><img src="Assets\pic80.png" width="500px"> <br><br>
+
+* As mentioned in the above image , i have altered the first table person by adding a new column.
+
+* The new_column name is `car_id` .
+
+* To represent this new_column as the foreign key , it is related with the key word `REFERENCES`
+
+* It is relating to the second table `car` because , this table name is mentioned followed by the `REFERENCE` keyword.
+
+* The type of the `car_id` is mentioned as `BIGINT` because the type of the primary_key `id` of second table `car` is also `BIGINT`.
+
+* primary_key `id` of secon table `car` is also mentiond in the bracket.
+
+* If we want to add constraint to the foreign key `car_id` , we can again alter the `person` table and add using the below command :
+
+```
+ALTER TABLE table_name
+ADD UNIQUE (column_name)
+```
+<br><img src="Assets\pic81.png" width="500px"> <br><br>
+
+* We can verify the existance of foreign key by describing the tables as follows:
+
+<br><img src="Assets\pic82.png" width="500px"> <br><br>
+
+# Updating Foreign keys columns :
+
+* We can update the foreign_key columns of the first_table with the value of primary_key of second_table as we have already related both.
+
+```
+UPDATE first_table_name SET foreign_key_column_in_first_table = primary_key_value_in_second_table_which_we_want_to_link WHERE condition_to_choose_row_of_first_table
+```
+## Example :
+
+* Consider that we have set up a foreign_key in `person` table to relate with the `car` .
+
+* These table can be look like below in initial stage :
+
+<br><img src="Assets\pic83.png" width="500px"> <br><br>
+
+* To link the car to the person , we must update the person table's foreign_key column as below :
+
+<br><img src="Assets\pic84.png" width="500px"> <br><br>
+
+* According to the above image , we must the assign the primary_key value of the second_table to the foreign_key of first_table to link with certain condition.
+
+* Here , i have linked the car which has `2` as id in the `car` table to the person who has first_name as `Barn` using th e foreign_key `car_id`.
+
+* I can also link the `id 1` of person table whose name is `kali` to the car of `id 1` which is `Dodge` by updating the `car_id` foreign_key in person as below.
+
+<br><img src="Assets\pic85.png" width="500px"> <br><br>
+
+## NOTE :
+
+* We cannot link foreign_keys with the non-exist primary_key of second table.If we try to do it it will prompt error message .
+
+* For example , the table `car` has only two primary keys `1 and 2` like below:
+
+<br><img src="Assets\pic86.png" width="500px"> <br><br>
+
+* If i try to link the id `3` which is `not exist` in the `car` table it will show error as below:
+
+<br><img src="Assets\pic87.png" width="500px"> <br><br>
+
+# Inner Joins :
+
+* Inner Join is used to connect the two tables using the foreign key of the first table and primary_key of the second table .
+
+* This method combines both tables together with the common values occuring in both tables.
+
+* It uses the below syntax:
+
+```
+SELECT column_names FROM first_table_name
+JOIN  second_table_name ON first_table_name.foreignkey = second_table_name.primary_key
+```
+
+* The final table view after innerJoin should look like below:
+
+<br><img src="Assets\pic88.png" width="500px"> <br><br>
+
+# Left Joins :
+
+* Left Joins is also used to combine two tables as inner Joins but the difference is left join combines every rows in both tables without omiting the uncommon regardng the foreign_keys and primary_keys.
+
+* We can acheive this by simply attaching the LEFT JOIN keyword instead of using JOIN keyword .
+
+```
+SELECT column_names FROM first_table_name
+ LEFT JOIN  second_table_name ON first_table_name.foreignkey = second_table_name.primary_key
+```
+<br><img src="Assets\pic89.png" width="500px"> <br><br>
+
+### Difference between INNER JOIN and LEFT JOIN :
+
+<br><img src="Assets\pic90.png" width="500px"> <br><br>
+
+# Deleting records with foreign keys :
+
+* Deleting records in any table is pretty simple with the following command.
+
+```
+DELETE FROM table_name WHERE condition_that_define_row_to_delete
+```
+
+* But when two tables are connected with foreign key , we `cannot delete record in the table which has foreign key reference`.
+
+* If we try to do this , it will prompt erroe as below:
+
+<br><img src="Assets\pic91.png" width="500px"> <br><br>
+
+* So if we want to delete the record in a table which is referenced with the foreign key , we must remove foreign key refernce in that table by deleting the row or updating the row with foreign key value as null.
+
+<br><img src="Assets\pic92.png" width="500px"> <br><br>
+
+# Exporting query results to CSV files :
+
+* CSV stands for Comma Seperated Values .
+
+* This file stores the data in a table format.
+
+* We can copy the result table of any query in a seperate CSV using `\copy` query in psql.
+
+```
+\copy   --> It performs SQL COPY with data stream to the client host.
+```
+
+* We can copy using the below query :
+
+```
+\copy (Query_which_result_we_want-to_copy) TO 'destination_file_path' DELIMETER ',' CSV HEADER;
+```
+* DELIMETER allows a single chareter that should seperate the columns in a  CSV file.
+
+<br><img src="Assets\pic93.png" width="500px"> <br><br>
+
+* Here the file :
+
+<br><img src="Assets\pic94.png" width="500px"> <br><br>
+
+# Serial and Sequences :
+
+* The BIGINT data type is a auto incremented sequence that we mostly use to specify the id of a table to differeniate a row from others.
+
+* We can see the sequence by describing table as below:
+
+<br><img src="Assets\pic95.png" width="500px"> <br><br>
+
+* So we can view last value and other two information on the sequence by select query on the sequence name as below image suggests:
+
+<br><img src="Assets\pic96.png" width="500px"> <br><br>
+
+* We can also increament sequence number without adding data using the beloe query
+
+```
+SELECT nextval('sequenec_name'::regclass)
+```
+
+<br><img src="Assets\pic97.png" width="500px"> <br><br>
+
+* If we insert new record , the id will be updated .
+
+* We can also RESET the sequence by below query :
+
+```
+ALTER SEQUENCE sequence_name RESTART WITH value_to_restart
+```
+<br><img src="Assets\pic98.png" width="500px"> <br><br>
+
+# Extensions :
+
+* Extension is psql allow us to add extra functionality to a database .
+
+* We can find the avaiable extensions using the query below:
+
+```
+SELECT * FROM pg_available_extensions;
+```
+<br><img src="Assets\pic99.png" width="500px"> <br><br>
+
+# Understanding UUID Data Type :
+
+* UUID stands for Universal Unique Identifires.
+
+* The Universl Unique identifiers can be used in postgrs by downloading the extensions.
+
+* We can find thid UUId extension by list all extensin using the `SELECT * FROM pg_available_extensions;` query as below:
+
+<br><img src="Assets\pic100.png" width="500px"> <br><br>
+
+## Download extensio in Postgres using query :
+
+* We can download any extension listed above using the below query :
+
+```
+CREATE EXTENSION IF NOT EXISTS 'extension_name';
+```
+
+* We can see the result as below image shows :
+
+<br><img src="Assets\pic101.png" width="500px"> <br><br>
+
+<br><img src="Assets\pic102.png" width="500px"> <br><br>
+
+
+## Generating a UUID :
+
+* To generate an UUID , we must call a function based on uuid .
+
+* We can list the available functions by the `\df` query.
+
+<br><img src="Assets\pic103.png" width="500px"> <br><br>
+
+* Now , we can invoke any function to generate an UUID to according to our wish by below query :
+
+```
+SELECT function_name();
+```
+
+* For example , If I try to invoke the version4 function which provides the random uuid's I must do as below :
+
+<br><img src="Assets\pic104.png" width="500px"> <br><br>
+
+# UUID As Primary keys :
+
+* uuid is already a datatype like BIGINT.
+
+* We can use the UUID's as primary keys of a table .
+
+* This has more advantage than using the BIGINT type as primary key because UUID generates randomly which does not allow external attacker to malform any data in our database.
+
+* It avoids conflicts when handling multiple table with relation while the BIGINT data type may encounter with same values for all tables.
+
+## Example when I try to create tables with uuid may look like below:
+
+<br><img src="Assets\pic105.png" width="500px"> <br><br>
+
+* The resultant table may look like :
+
+<br><img src="Assets\pic106.png" width="500px"> <br><br>
+
+* We can also perform every operatons like ralating two tables using foreign key , adding UNIQUE constraints and others as we did for BIGINT datatypw.
+
+
+
+
+
+
+
+
 
 
 
