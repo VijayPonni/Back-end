@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model car {
+  id     BigInt  @id
+  make   String  @db.VarChar(100)
+  model  String  @db.VarChar(100)
+  price  Decimal @db.Decimal(19, 2)
+  color String
+  person person?
+}
+
+model car_uuid {
+  car_id      String       @id @db.Uuid
+  make        String       @db.VarChar(100)
+  model       String       @db.VarChar(100)
+  price       Decimal      @db.Decimal(19, 2)
+  person_uuid person_uuid?
+}
+
+model person {
+  id               BigInt   @id @default(autoincrement())
+  first_name       String   @db.VarChar(50)
+  last_name        String   @db.VarChar(50)
+  email            String?  @db.VarChar(50)
+  gender           String   @db.VarChar(50)
+  date_of_birth    DateTime @db.Date
+  country_of_birth String   @db.VarChar(50)
+  car_id           BigInt?  @unique
+  car              car?     @relation(fields: [car_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model person_uuid {
+  person_id        String    @id @db.Uuid
+  first_name       String    @db.VarChar(50)
+  last_name        String    @db.VarChar(50)
+  email            String?   @db.VarChar(50)
+  gender           String    @db.VarChar(50)
+  date_of_birth    DateTime  @db.Date
+  country_of_birth String    @db.VarChar(50)
+  person_foreign   String?   @unique @db.Uuid
+  car_uuid         car_uuid? @relation(fields: [person_foreign], references: [car_id], onDelete: NoAction, onUpdate: NoAction)
+}
