@@ -20,7 +20,7 @@
 
 ### Database Engine :
 
-* The Database Engine is the software that is used by the DBMS ( Database Management Systems ) to make CRUD operations like CREATE , RETRIEVE , UPDATE and DELETE in the Database.
+* The Database Engine is the software that is used by the DBMS ( Database Management Systems ) to make CRUD operations like CREATE , READ , UPDATE and DELETE in the Database.
 
 * Postgres is one of the database Engines .
 
