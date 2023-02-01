@@ -627,6 +627,301 @@ enum enum_name {
 <br><img src="Assets\pris37.png" ><br>
 
 
+# Client create Operations :
+
+* We should only use one prismaClient instance for all operations.
+
+* We don't need to use many prisma client varibales . If we do this , our databse will not work as expected beacuse of multiple connections.
+
+<br><img src="Assets\pris38.png" ><br>
+
+* To craete a model , we just want to apply `create()` function with the prisma client instance and the particular model name with `. (period)  ` notation.
+
+* Inside the create function , we just need to pass an `{}` as an argument and that object should containn the `data :` as property.
+
+* The `data:` property should take the column fields and their values as values.
+
+## Example :
+
+* We have already created a User Model with the the fields like id , age , name , email , role and etc.
+
+* To create the model with the data we should follow the below syntax :
+
+### scripts.ts file
+
+```
+async function main() {
+const user = await prisma.user.create({
+    data : {
+        name : "Vijay",
+        age : 21 ,
+        email : "vijay@yopmail.com",
+    }
+})
+console.log("User :" , user)
+}
+```
+
+<br><img src="Assets\pris39.png" ><br>
+
+## Nested creation :
+
+* We can create another model inside one model's create function using the prisma.
+
+* To achieve this we must add the another model's name as the field with the `create :` property insdide it.
+
+
+```
+async function main() {
+await prisma.user.deleteMany();
+const user = await prisma.user.create({
+    data : {
+        name : "Vijay",
+        age : 21 ,
+        email : "vijay@yopmail.com",
+        UserPreferences : {             //  Second model to create
+            create : {
+                emailUpdates : true       // Fields with their corresponding values.
+            }
+        }
+    },
+})
+console.log("User :" , user)
+}
+```
+
+* So the result should look like below :
+
+<br><img src="Assets\pris40.png" ><br>
+
+
+## Using include and select queries :
+
+* We can use some queries like `include` and `select` to our model .
+* We should mention the field names with boolean value `true` to those quries inorder to get the result we wanted.
+* We cannot use the `select` and `include` queries together in a model. If we do it may show error :
+
+## Example : Using `select` query to select only name and age in the User model :
+
+<br><img src="Assets\pris41.png" ><br>
+
+# CreateMany :
+
+* We can use `createMany()` function to create many data to a model.
+
+* `createMany()` takes the `data` property values as `array` throughwhich we can set many data in object format .
+
+* We can get the `count of created data` as result by consoling the model.
+
+* We cannot use any additional queries like `select` and `inclues` when use this createMany() function.
+
+## Example : Creating many data in User model :
+
+<br><img src="Assets\pris42.png" ><br>
+
+# Client Read Operations :
+
+## findUnique query :
+
+* `findUnique()` allows us to get the unique records in a database which have `@unique` contraint.
+
+* Inside the `findUnique()` function we always should use the `where` clause to specify the particular record according to the condition .
+
+<br><img src="Assets\pris43.png" ><br>
+
+* In a model we may set a block level attribute as `@@unique([multiple_fields])`. So we can filter with this cobined fields as below :
+
+* Consider that , i have set `age` and `name` fields as `block-level` attributes with `@@unique` constrainnts in the user model .
+
+* So , If I try to filter with respect to both , it may look like below :
+
+<br><img src="Assets\pris44.png" ><br>
+
+
+* If we try to filter any `incorrect record` , it will respond with `null` value as below :
+
+<br><img src="Assets\pris45.png" ><br>
+
+## findFirst() query :
+
+* findFirst() allows us to filter the very first record wit the condition we specify .
+
+* It also works on every field of a model even without `@unique()` contraint.
+
+* For example , If i have many records with age 21 , i can find the very first one as follows :
+
+<br><img src="Assets\pris46.png" ><br>
+
+## findMany() query :
+
+* It allows us to filter all the records that matches with the condition specifies in a `array format` as below :
+
+* If i want everyone of age 21 in a array format i can do it with `findMany()` as below :
+
+<br><img src="Assets\pris47.png" ><br>
+
+
+## distict query :
+
+* When `distinct` is used only the different value is obtained.
+
+* We can use it on multile fields also.
+
+<br><img src="Assets\pris48.png" ><br>
+
+## Pagination :
+
+* We can use `take` query to limit the number of records.
+
+* We can use `skip` with the `take` to skip any particular record using it's position.
+
+* We can also use  `orderBy` to order the records either in Ascending and Descending order.
+
+* For example , I have 3 records and I can apply the above queries to those lists as below :
+
+<br><img src="Assets\pris49.png" ><br>
+
+# Advanced Filtering :
+
+* `equals`  --> It exactly works as where .
+
+* `not`  --> It provides the result opposite to our condition.
+
+* `in`    --> It takes the array of values to filter.
+
+* `notIn` --> Opposite of `in` .
+
+* `lt`  --> Checks `less than`
+
+* `gt`  --> checks wheather `Greater Than or Equal to `
+
+* `lte`  --> checks wheather `Less Than or Equal to`
+
+* `contains` --> It checks one string has another string within it.
+
+* `startsWith`  --> It checks string wheather that starts with the given.
+
+# combining multiple queries with AND , OR and NOT :
+
+* We can combine multiple queries with AND , OR and NOT.
+
+* We should menttion all queries inside `array` with below syntax:
+
+```
+async function main() {
+const user = await prisma.user.findMany({
+    where : {
+        AND : [
+            {   age : 21 } ,
+            { name : 'vijay'}
+        ]
+    }
+})
+console.log("User ...." , user)
+}
+```
+
+# Relationship filtering :
+
+* It allows us to apply query on another model fields .
+
+* For example , we can get the result of aone model when applying query condition that based on another related model.
+
+* If i try to filter the `User` model with the `userpreferenece` model's field , i can do like below :
+
+<br><img src="Assets\pris50.png" ><br>
+
+* We can also check with `every` , `some` and `none` queries in relative models.
+
+# Client update Operations :
+
+## update() :
+
+* `update()` function takes two sections. First one is `where` clause and second one is `create`.
+
+* It updates only the first match that satisfies the conition.
+
+* We can also use `includes` and `select` queries after updaing.
+
+<br><img src="Assets\pris51.png" ><br>
+
+## updateMany()
+
+* `updateMany()` works same as the `update()` but the difference is it updated all the data that matches the condition we defined.
+
+* It returns the number of record updated as a result.
+
+* `updateMnay()` should not allow to have `select` or `includes` queries like `craeteMany()`.
+
+<br><img src="Assets\pris52.png" ><br>
+
+## Supporting to fancy functions :
+
+* `update()` and `updateMany()` methods allow us to apply the the following functionalities to the numbers :
+
+  * increament
+
+  * decrement
+
+  * add
+
+  * mutiply
+
+  * divide
+
+<br><img src="Assets\pris53.png" ><br>
+
+# Connect existing Relationships :
+
+* We can use `connect` keyword to get connect with the another model while updating and creating.
+
+<br><img src="Assets\pris54.png" ><br>
+
+* We can also use `disconnect` to get disconnected with another model. we just want to set `disconnect` property to `true`
+
+<br><img src="Assets\pris55.png" ><br>
+
+
+# Client Delete Operations :
+
+* We can delete data using `delete()` function y specifying the condition on the field has `@unique` constarint.
+
+<br><img src="Assets\pris56.png" ><br>
+
+* We can also delete multiple records using `deleteMany()` function. It returns the number of records deleted.
+
+* We can also delete every records using `deleteMany()` without specifying any conditions.
+
+<br><img src="Assets\pris57.png" ><br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

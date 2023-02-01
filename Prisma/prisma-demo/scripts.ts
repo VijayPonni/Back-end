@@ -2,7 +2,10 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient();
 
 async function main() {
-await prisma.user.deleteMany()
+const user = await prisma.user.deleteMany()
+
+
+console.log("User ...." , user)
 }
 
 main ()
@@ -16,7 +19,6 @@ main ()
         await prisma.$disconnect();
     }
 )
-function data(data: any, arg1: {}) {
-    throw new Error('Function not implemented.');
-}
+
+
 
